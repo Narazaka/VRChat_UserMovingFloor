@@ -36,6 +36,11 @@ jobs:
           cp README.md Assets/UserMovingFloor/README.md
           cp LICENSE Assets/UserMovingFloor/LICENSE.txt
 
+      # version
+      - name: Copy txts
+        run: |
+          echo "PACKAGE_VERSION=`cat Assets/UserMovingFloor/version.txt`" >> $GITHUB_ENV
+
       # list meta
       - name: list meta for packaging
         run: |
@@ -46,11 +51,11 @@ jobs:
       - name: Create unitypackage
         uses: pCYSl5EDgo/create-unitypackage@v1
         with:
-          package-path: 'package/UserMovingFloor.unitypackage'
+          package-path: package/UserMovingFloor-${{ env.PACKAGE_VERSION }}.unitypackage
           include-files: metaList
 
       # Output
       - uses: actions/upload-artifact@v1
         with:
           path: package
-          name: UserMovingFloor.unitypackage
+          name: UserMovingFloor-${{ env.PACKAGE_VERSION }}.unitypackage
