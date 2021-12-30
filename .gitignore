@@ -88,3 +88,9 @@ crashlytics-build.properties
 /[Aa]ssets/UdonSharp.meta
 !/[Aa]ssets/UdonSharp/version.txt
 !/[Aa]ssets/UdonSharp/version.txt.meta
+
+/[Aa]ssets/Cyan.meta
+/[Aa]ssets/Cyan/PlayerObjectPool/*
+/[Aa]ssets/Cyan/PlayerObjectPool.meta
+!/[Aa]ssets/Cyan/PlayerObjectPool/version.txt
+!/[Aa]ssets/Cyan/PlayerObjectPool/version.txt.meta
