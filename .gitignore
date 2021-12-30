@@ -71,11 +71,13 @@ crashlytics-build.properties
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
 
-/[Aa]ssets/SerializedUdonPrograms
+/[Aa]ssets/SerializedUdonPrograms/
 /[Aa]ssets/SerializedUdonPrograms.meta
-/[Aa]ssets/Udon
+/[Aa]ssets/Udon/
 /[Aa]ssets/Udon.meta
-/[Aa]ssets/VRChat Examples
+/[Aa]ssets/VRChat Examples/
 /[Aa]ssets/VRChat Examples.meta
-/[Aa]ssets/VRCSDK
+/[Aa]ssets/VRCSDK/*
 /[Aa]ssets/VRCSDK.meta
+!/[Aa]ssets/VRCSDK/version.txt
+!/[Aa]ssets/VRCSDK/version.txt.meta
