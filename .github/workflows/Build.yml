@@ -1,0 +1,56 @@
+name: Build
+
+on:
+  pull_request: {}
+  push: { branches: [master] }
+
+env:
+  UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+
+jobs:
+  build:
+    name: Build my project ✨
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        with:
+          lfs: true
+
+      # Cache
+      - uses: actions/cache@v1.1.0
+        with:
+          path: Library
+          key: Library
+
+      # Test
+      # - name: Run tests
+      #   uses: webbertakken/unity-test-runner@v1.3
+      #   with:
+      #     unityVersion: 2019.4.31f1
+
+      # txts
+      - name: Copy txts
+        run: |
+          cp README.txt Assets/UserMovingFloor/README.txt
+          cp LICENSE Assets/UserMovingFloor/LICENSE.txt
+
+      # list meta
+      - name: list meta for packaging
+        run: |
+          echo "Assets/UserMovingFloor.meta" >> metaList
+          find Assets/UserMovingFloor/ -name \*.meta >> metaList
+      - run: mkdir package
+
+      - name: Create unitypackage
+        uses: pCYSl5EDgo/create-unitypackage@v1
+        with:
+          package-path: 'package/UserMovingFloor.unitypackage'
+          include-files: metaList
+
+      # Output
+      - uses: actions/upload-artifact@v1
+        with:
+          path: package
+          name: UserMovingFloor.unitypackage
