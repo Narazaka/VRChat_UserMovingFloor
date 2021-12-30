@@ -37,7 +37,7 @@ jobs:
           cp LICENSE Assets/UserMovingFloor/LICENSE.txt
 
       # version
-      - name: Copy txts
+      - name: version
         run: |
           echo "PACKAGE_VERSION=`cat Assets/UserMovingFloor/version.txt`" >> $GITHUB_ENV
 
