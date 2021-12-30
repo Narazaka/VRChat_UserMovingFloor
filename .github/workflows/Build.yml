@@ -33,7 +33,7 @@ jobs:
       # txts
       - name: Copy txts
         run: |
-          cp README.txt Assets/UserMovingFloor/README.txt
+          cp README.md Assets/UserMovingFloor/README.md
           cp LICENSE Assets/UserMovingFloor/LICENSE.txt
 
       # list meta
