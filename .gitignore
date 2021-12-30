@@ -94,3 +94,8 @@ crashlytics-build.properties
 /[Aa]ssets/Cyan/PlayerObjectPool.meta
 !/[Aa]ssets/Cyan/PlayerObjectPool/version.txt
 !/[Aa]ssets/Cyan/PlayerObjectPool/version.txt.meta
+
+/[Aa]ssets/CyanEmu/*
+/[Aa]ssets/CyanEmu.meta
+!/[Aa]ssets/CyanEmu/version.txt
+!/[Aa]ssets/CyanEmu/version.txt.meta
