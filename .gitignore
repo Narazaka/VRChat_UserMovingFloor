@@ -81,3 +81,10 @@ crashlytics-build.properties
 /[Aa]ssets/VRCSDK.meta
 !/[Aa]ssets/VRCSDK/version.txt
 !/[Aa]ssets/VRCSDK/version.txt.meta
+
+/[Aa]ssets/Gizmos/
+/[Aa]ssets/Gizmos.meta
+/[Aa]ssets/UdonSharp/*
+/[Aa]ssets/UdonSharp.meta
+!/[Aa]ssets/UdonSharp/version.txt
+!/[Aa]ssets/UdonSharp/version.txt.meta
