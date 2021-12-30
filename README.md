@@ -2,6 +2,8 @@
 
 VRChat用乗り物床面追従システム
 
+鉄道やバスなど乗客が移動出来る床面が存在し緩やかに発停車する乗り物に適しています。
+
 ## 使い方
 
 0. あらかじめ [CyanPlayerObjectPool](https://github.com/CyanLaser/CyanPlayerObjectPool/releases/tag/v0.0.5) をインポートしておいて下さい。
@@ -20,6 +22,12 @@ VRChat用乗り物床面追従システム
 1. InsideUserMovingFloorVRCChair.prefabを乗り物に置いて下さい。
 2. UserMovingFloorのInside Chairsに上記で置いた中のVRCChair3オブジェクト（InsideVRCStationCompanionが付いている）を設定して下さい。
 
+- 既知の問題: 椅子に先に座っている人がいる場合もInteractできてしまいます。
+
+## プルリクエスト歓迎！
+
+雑に投げて下さい。反応がなければTwitterでつついて下さい。是非よりよい乗車システムを作ってゆきましょう。
+
 ## ライセンス
 
-Zlib License
+[Zlib License](LICENSE)
