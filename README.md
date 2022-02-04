@@ -15,7 +15,7 @@ VRChat用乗り物床面追従システム
 **以下の前提リソースを事前にインポートして下さい**
 - [VRCSDK3-World]( https://vrchat.com/home/download )
 - [UdonSharp]( https://github.com/MerlinVR/UdonSharp/releases )
-- [CyanPlayerObjectPool]( https://github.com/CyanLaser/CyanPlayerObjectPool/releases/tag/v0.0.5 )
+- [CyanPlayerObjectPool]( https://github.com/CyanLaser/CyanPlayerObjectPool/releases/tag/v1.0.0 )
 
 **[UserMovingFloor ダウンロード]( https://github.com/Narazaka/VRChat_UserMovingFloor/releases )**
 
