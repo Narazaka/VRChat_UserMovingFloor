@@ -18,7 +18,7 @@ namespace UserMovingFloor
         [HideInInspector]
         public int PreviousParentIndex;
         [HideInInspector]
-        public GameObject[] Targets;
+        public Transform[] Targets;
 
         public void _OnOwnerSet()
         {
@@ -57,7 +57,7 @@ namespace UserMovingFloor
         {
             if (PreviousParentIndex != ParentIndex)
             {
-                VRCStationCompanion.transform.parent = ParentIndex == -1 ? transform : Targets[ParentIndex].transform;
+                VRCStationCompanion.transform.parent = ParentIndex == -1 ? transform : Targets[ParentIndex];
             }
             PreviousParentIndex = ParentIndex;
         }

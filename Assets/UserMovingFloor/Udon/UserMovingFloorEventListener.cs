@@ -21,7 +21,7 @@ namespace UserMovingFloor
         const int RIDING_CHANGED =             E_RIDING             | E_CHANGED;
 
         public Cyan.PlayerObjectPool.CyanPlayerObjectAssigner Pool;
-        public GameObject[] Targets;
+        public Transform[] Targets;
         Component[] TargetUdons;
         public InsideVRCStationCompanion[] InsideChairs;
 
@@ -139,7 +139,7 @@ namespace UserMovingFloor
                     InsideIndex = currentInsideIndex;
                     break;
                 case RIDING_CHANGED:
-                    PositionVRCStationCompanion.transform.parent = Targets[currentInsideIndex].transform;
+                    PositionVRCStationCompanion.transform.parent = Targets[currentInsideIndex];
                     PositionController.ResetLocalOrigin(currentInsideIndex);
                     InsideIndex = currentInsideIndex;
                     break;
@@ -178,7 +178,7 @@ namespace UserMovingFloor
                     : player.GetWalkSpeed();
                 if (vertical != 0f || horizontal != 0f)
                 {
-                    var rotationY = isVr ? PositionController.transform.localRotation.eulerAngles.y : player.GetTrackingData(VRCPlayerApi.TrackingDataType.Head).rotation.eulerAngles.y - Targets[InsideIndex].transform.rotation.eulerAngles.y;
+                    var rotationY = isVr ? PositionController.transform.localRotation.eulerAngles.y : player.GetTrackingData(VRCPlayerApi.TrackingDataType.Head).rotation.eulerAngles.y - Targets[InsideIndex].rotation.eulerAngles.y;
                     var playerMoved = Quaternion.Euler(0, rotationY, 0) * new Vector3(horizontal, 0, vertical) * playerSpeed * Time.deltaTime;
                     PositionController.transform.localPosition += playerMoved;
                 }
