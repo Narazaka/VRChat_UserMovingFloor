@@ -3,6 +3,7 @@ using UdonSharp;
 using UnityEngine;
 using VRC.SDKBase;
 using VRC.Udon;
+using VRC.Udon.Common;
 
 namespace UserMovingFloor
 {
@@ -30,6 +31,10 @@ namespace UserMovingFloor
         int InsideIndex = -1;
         int State = NORMAL;
 
+        float Horizontal = 0;
+        float Vertical = 0;
+        float Rotation = 0;
+
         void Start()
         {
             var udons = Pool.pooledUdon;
@@ -53,6 +58,21 @@ namespace UserMovingFloor
             PositionController = (UserPositionController)Pool._GetPlayerPooledUdon(player);
             PositionVRCStationCompanion = PositionController.VRCStationCompanion;
             Networking.SetOwner(player, PositionVRCStationCompanion.gameObject);
+        }
+
+        public override void InputMoveHorizontal(float value, UdonInputEventArgs args)
+        {
+            Horizontal = value;
+        }
+
+        public override void InputMoveVertical(float value, UdonInputEventArgs args)
+        {
+            Vertical = value;
+        }
+
+        public override void InputLookHorizontal(float value, UdonInputEventArgs args)
+        {
+            Rotation = value;
         }
 
         void Update()
@@ -155,31 +175,27 @@ namespace UserMovingFloor
             {
                 var isVr = player.IsUserInVR();
 
-                // rotation
-                if (isVr)
+                if (Rotation != 0f)
                 {
-                    var rotation = Input.GetAxis("Joy2 Axis 4");
-                    if (rotation != 0)
-                        PositionController.transform.localRotation = PositionController.transform.localRotation * Quaternion.AngleAxis(rotation * 5, Vector3.up);
-                }
-                else
-                {
-                    var rotation = Input.GetAxis("Mouse X");
-                    if (rotation != 0)
-                        PositionController.transform.localRotation *= Quaternion.AngleAxis(rotation * 5, Vector3.up);
+                    if (isVr)
+                    {
+                        PositionController.transform.localRotation = PositionController.transform.localRotation * Quaternion.AngleAxis(Rotation * 5, Vector3.up);
+                    }
+                    else
+                    {
+                        PositionController.transform.localRotation *= Quaternion.AngleAxis(Rotation * 5, Vector3.up);
+                    }
                 }
 
                 // position
-                var vertical = Input.GetAxis("Vertical");
-                var horizontal = Input.GetAxis("Horizontal");
                 // 非VRでShift押していなければ歩行
                 var playerSpeed = isVr || Input.GetKey(KeyCode.LeftShift)
                     ? player.GetRunSpeed()
                     : player.GetWalkSpeed();
-                if (vertical != 0f || horizontal != 0f)
+                if (Vertical != 0f || Horizontal != 0f)
                 {
                     var rotationY = isVr ? PositionController.transform.localRotation.eulerAngles.y : player.GetTrackingData(VRCPlayerApi.TrackingDataType.Head).rotation.eulerAngles.y - Targets[InsideIndex].rotation.eulerAngles.y;
-                    var playerMoved = Quaternion.Euler(0, rotationY, 0) * new Vector3(horizontal, 0, vertical) * playerSpeed * Time.deltaTime;
+                    var playerMoved = Quaternion.Euler(0, rotationY, 0) * new Vector3(Horizontal, 0, Vertical) * playerSpeed * Time.deltaTime;
                     PositionController.transform.localPosition += playerMoved;
                 }
 
