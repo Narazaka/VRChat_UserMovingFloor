@@ -7,6 +7,7 @@ using VRC.Udon.Common;
 
 namespace UserMovingFloor
 {
+    [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class UserMovingFloorEventListener : UdonSharpBehaviour
     {
         const int E_RIDING = 0b1;

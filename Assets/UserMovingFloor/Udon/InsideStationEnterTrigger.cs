@@ -6,6 +6,7 @@ using VRC.Udon;
 
 namespace UserMovingFloor
 {
+    [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class InsideStationEnterTrigger : UdonSharpBehaviour
     {
         public VRCStation VRCStation;

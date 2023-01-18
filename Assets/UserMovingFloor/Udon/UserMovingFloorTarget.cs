@@ -6,6 +6,7 @@ using VRC.Udon;
 
 namespace UserMovingFloor
 {
+    [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class UserMovingFloorTarget : UdonSharpBehaviour
     {
         public Collider[] RideColliders;
