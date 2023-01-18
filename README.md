@@ -12,16 +12,26 @@ VRChat用乗り物床面追従システム
 
 ## インストール
 
+### UdonSharp v1.0環境(VCC)
+
+**以下の前提リソースを事前にセットアップ・インポートして下さい**
+- VCCでのUdonSharpセットアップ
+- [CyanPlayerObjectPool >= 1.1.0]( https://github.com/CyanLaser/CyanPlayerObjectPool/releases/tag/v1.1.0 )
+
+**[UserMovingFloor >= v3 ダウンロード]( https://github.com/Narazaka/VRChat_UserMovingFloor/releases )**
+
+### UdonSharp v0.x環境(従来SDK)
+
 **以下の前提リソースを事前にインポートして下さい**
 - [VRCSDK3-World]( https://vrchat.com/home/download )
 - [UdonSharp]( https://github.com/MerlinVR/UdonSharp/releases )
-- [CyanPlayerObjectPool]( https://github.com/CyanLaser/CyanPlayerObjectPool/releases/tag/v1.0.0 )
+- [CyanPlayerObjectPool <= v1.0.0]( https://github.com/CyanLaser/CyanPlayerObjectPool/releases/tag/v1.0.0 )
 
-**[UserMovingFloor ダウンロード]( https://github.com/Narazaka/VRChat_UserMovingFloor/releases )**
+**[UserMovingFloor <= v2 ダウンロード]( https://github.com/Narazaka/VRChat_UserMovingFloor/releases/v2.0.1 )**
 
 ## 使い方
 
-0. あらかじめ [CyanPlayerObjectPool]( https://github.com/CyanLaser/CyanPlayerObjectPool/releases/tag/v0.0.5 ) をインポートしておいて下さい。
+0. あらかじめ CyanPlayerObjectPool 等依存アセットをインポートしておいて下さい。
 1. 乗り物のオブジェクトにUser Moving Floor Targetを付けます。
    - Ride Colliders:（任意）乗り物が停止しているときに有効な床面などのコライダー。乗車中に干渉しないようOFFになります。
    - Inside Collider: （必須）乗り物の内部に居る判定用コライダー。IsTriggerを有効にしてください。
