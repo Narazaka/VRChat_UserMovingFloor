@@ -8,7 +8,7 @@ using VRC.Udon.Common;
 namespace UserMovingFloor
 {
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
-    public class UserMovingFloorEventListener : UdonSharpBehaviour
+    public class UserMovingFloorEventListener : Cyan.PlayerObjectPool.CyanPlayerObjectPoolEventListener
     {
         const int E_RIDING = 0b1;
         const int E_GETTING = 0b10;
@@ -27,6 +27,7 @@ namespace UserMovingFloor
         Component[] TargetUdons;
         public InsideVRCStationCompanion[] InsideChairs;
 
+        UserParentController ParentController;
         UserPositionController PositionController;
         UserPositionVRCStationCompanion PositionVRCStationCompanion;
         int InsideIndex = -1;
@@ -53,12 +54,25 @@ namespace UserMovingFloor
             }
         }
 
-        public void _OnLocalPlayerAssigned()
+        public override void _OnPlayerAssigned(VRCPlayerApi player, int poolIndex, UdonBehaviour poolObject)
+        {
+            poolObject.SetProgramVariable("Targets", Targets);
+            poolObject.SendCustomEvent("ParentIndexMayChanged");
+        }
+
+        public override void _OnLocalPlayerAssigned()
         {
             var player = Networking.LocalPlayer;
-            PositionController = (UserPositionController)Pool._GetPlayerPooledUdon(player);
+            ParentController = (UserParentController)Pool._GetPlayerPooledUdon(player);
+            PositionController = ParentController.UserPositionController;
             PositionVRCStationCompanion = PositionController.VRCStationCompanion;
             Networking.SetOwner(player, PositionVRCStationCompanion.gameObject);
+        }
+
+
+        public override void _OnPlayerUnassigned(VRCPlayerApi player, int poolIndex, UdonBehaviour poolObject)
+        {
+
         }
 
         public override void InputMoveHorizontal(float value, UdonInputEventArgs args)
@@ -78,7 +92,7 @@ namespace UserMovingFloor
 
         void Update()
         {
-            if (PositionController == null) return;
+            if (ParentController == null) return;
 
             // 位置判定
             var player = Networking.LocalPlayer;
@@ -146,7 +160,7 @@ namespace UserMovingFloor
                     PositionVRCStationCompanion.transform.parent = target.transform;
                     PositionVRCStationCompanion.transform.position = playerPosition;
                     PositionVRCStationCompanion.transform.rotation = player.GetRotation();
-                    PositionController.ResetLocalOrigin(currentInsideIndex);
+                    ParentController.ResetLocalOrigin(currentInsideIndex);
                     PositionVRCStationCompanion.UseStation(player);
                     // player.Immobilize(true);
                     target.SendCustomEvent("_OnGetOn");
@@ -155,13 +169,13 @@ namespace UserMovingFloor
                 case GET_OFF:
                     ((UdonBehaviour)TargetUdons[InsideIndex]).SendCustomEvent("_OnGetOff");
                     // player.Immobilize(false);
-                    PositionController.ResetLocalOrigin(currentInsideIndex);
+                    ParentController.ResetLocalOrigin(currentInsideIndex);
                     PositionVRCStationCompanion.ExitStation(player);
                     InsideIndex = currentInsideIndex;
                     break;
                 case RIDING_CHANGED:
                     PositionVRCStationCompanion.transform.parent = Targets[currentInsideIndex];
-                    PositionController.ResetLocalOrigin(currentInsideIndex);
+                    ParentController.ResetLocalOrigin(currentInsideIndex);
                     InsideIndex = currentInsideIndex;
                     break;
             }

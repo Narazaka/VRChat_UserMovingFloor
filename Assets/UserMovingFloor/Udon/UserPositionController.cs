@@ -6,19 +6,10 @@ using VRC.Udon;
 
 namespace UserMovingFloor
 {
-    [UdonBehaviourSyncMode(BehaviourSyncMode.Continuous)]
+    [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class UserPositionController : UdonSharpBehaviour
     {
         public UserPositionVRCStationCompanion VRCStationCompanion;
-        // Who is the current owner of this object. Null if object is not currently in use. 
-        [HideInInspector]
-        public VRCPlayerApi Owner;
-        [UdonSynced, HideInInspector]
-        public int ParentIndex = -1;
-        [HideInInspector]
-        public int PreviousParentIndex;
-        [HideInInspector]
-        public Transform[] Targets;
 
         public void _OnOwnerSet()
         {
@@ -40,9 +31,8 @@ namespace UserMovingFloor
             DisableInteractive = true;
         }
 
-        public void ResetLocalOrigin(int parentIndex)
+        public void ResetLocalOrigin()
         {
-            ParentIndex = parentIndex;
             transform.position = VRCStationCompanion.transform.localPosition;
             transform.rotation = Quaternion.AngleAxis(VRCStationCompanion.transform.localEulerAngles.y, Vector3.up);
         }
@@ -51,15 +41,6 @@ namespace UserMovingFloor
         {
             VRCStationCompanion.transform.localPosition = transform.localPosition;
             VRCStationCompanion.transform.localRotation = transform.localRotation;
-        }
-
-        public override void OnDeserialization()
-        {
-            if (PreviousParentIndex != ParentIndex)
-            {
-                VRCStationCompanion.transform.parent = ParentIndex == -1 ? transform : Targets[ParentIndex];
-            }
-            PreviousParentIndex = ParentIndex;
         }
     }
 }
